@@ -1,10 +1,15 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Home from './pages/Home/Home';
 
 function App() {
 
   return (
-    <div className="flex h-screen items-center justify-center">
-      <h1 className="text-white  text-center text-5xl">Roshan PortFolio Project</h1> 
-    </div>
+      <BrowserRouter>
+        <Routes>
+          <Route  path='/' element= {<Home/>}/>
+        </Routes>
+      </BrowserRouter>
+    
   )
 }
 
