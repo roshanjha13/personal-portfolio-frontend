@@ -2,6 +2,20 @@ import React from "react";
 import SectionTitle from "../../components/Header/SectionTitle";
 
 const About = () => {
+  const skills = [
+    "Javascript",
+    "React",
+    "Github",
+    "Node.js",
+    "Express.js",
+    "Mongodb",
+    "WebRTC",
+    "Socket.io",
+    "Redux Toolkit",
+    "ContextAPI",
+    "React Router Dom",
+  ];
+
   return (
     <div>
       <SectionTitle title="About " />
@@ -29,6 +43,20 @@ const About = () => {
             quae natus sequi labore amet. Quos, qui quisquam aperiam corporis
             nisi placeat!
           </p>
+        </div>
+      </div>
+
+      <div className="py-5">
+        <h1 className="text-xl text-tertiary">
+          Here are a few technologies ,I've been working and learning with
+          recently
+        </h1>
+        <div className="flex flex-wrap gap-10 m-6">
+        {skills.map((skill,index)=>(
+            <div key={index} className="border border-tertiary py-3 px-4">
+              <h1 className="text-tertiary">{skill}</h1>  
+            </div>         
+        ))}
         </div>
       </div>
     </div>
