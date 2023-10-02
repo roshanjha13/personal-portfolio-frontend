@@ -21,12 +21,12 @@ const About = () => {
       <SectionTitle title="About " />
       <div className="flex w-full items-center sm:flex-col">
         <div className="h-[70vh] w-1/2 sm:w-full">
-          <dotlottie-player
+          <lottie-player
             src="https://lottie.host/52d82f19-52a8-4fc8-8fb2-8c3ba41b04dc/yGStS6Z1TY.json"
             background="transparent"
             speed="1"
             autoplay
-          ></dotlottie-player>
+          ></lottie-player>
         </div>
         <div className="flex flex-col gap-5 w-1/2 sm:w-full">
           <p className="text-white">
@@ -53,7 +53,7 @@ const About = () => {
         </h1>
         <div className="flex flex-wrap gap-10 m-6">
         {skills.map((skill,index)=>(
-            <div key={index} className="border border-tertiary py-3 px-4">
+            <div key={index} className="border border-tertiary py-3 px-4 rounded-full">
               <h1 className="text-tertiary">{skill}</h1>  
             </div>         
         ))}
@@ -64,3 +64,4 @@ const About = () => {
 };
 
 export default About;
+
