@@ -34,4 +34,49 @@ font-family: "Montserrat",sans-serif;
     color: #f5f5f5;
   }
   
-  
+  .r{
+    animation: r is infinite;
+  }
+
+  @keyframes r {
+    0% {
+      opacity: 1;
+    } 
+    50% {
+      opacity: 0.5;
+
+    } 100% {
+      opacity: 0.5;
+    }
+  }
+
+  .k{
+    animation: k is infinite;
+  }
+
+  @keyframes k {
+    0% {
+      opacity: 0.5;
+    } 
+    50% {
+      opacity: 1;
+
+    } 100% {
+      opacity: 0.5;
+    }
+  }
+  .j{
+    animation: j is infinite;
+  }
+
+  @keyframes j {
+    0% {
+      opacity: 0.5;
+    } 
+    50% {
+      opacity: 0.5;
+
+    } 100% {
+      opacity: 1;
+    }
+  }
