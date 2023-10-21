@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import SectionTitle from "../../components/Header/SectionTitle";
-import { education } from "../../resources/education";
+import { useSelector } from "react-redux";
 const Education = () => {
   const [selectedItemIndex, setSelectedItemIndex] = useState(0);
+  const {  portfolioData } = useSelector((state) => state.root);
+  const {education} = portfolioData
   return (
     <div>
       <SectionTitle title="Education" />
