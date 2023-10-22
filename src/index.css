@@ -80,3 +80,8 @@ font-family: "Montserrat",sans-serif;
       opacity: 1;
     }
   }
+
+  .header h1{
+    margin: 0 !important;
+    padding: 0 !important;
+  }
