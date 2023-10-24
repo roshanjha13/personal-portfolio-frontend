@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Modal, message } from "antd";
 import axios from "axios";
-import { HideLoading, ShowLoading } from "../../redux/rootSlice";
+import { HideLoading, ReloadData, ShowLoading } from "../../redux/rootSlice";
 
 const AdminExperiences = () => {
   const { portfolioData } = useSelector((state) => state.root);
@@ -14,8 +14,6 @@ const AdminExperiences = () => {
 
   const onFinish = async (values) => {
     try {
-      const tempSkills = values.skills.split(",");
-      values.skills = tempSkills;
       dispatch(ShowLoading());
       const response = await axios.post(
         "http://localhost:3000/api/add-experience",
@@ -24,6 +22,9 @@ const AdminExperiences = () => {
       dispatch(HideLoading());
       if (response.data.success) {
         message.success(response.data.message);
+        setShowAddEditModal(false)
+        dispatch(HideLoading())
+        dispatch(ReloadData(true))
       } else {
         message.error(response.data.message);
       }
@@ -32,7 +33,7 @@ const AdminExperiences = () => {
       message.error(response.data.message);
     }
   };
-
+ 
   return (
     <div>
       <div className="flex justify-end">
