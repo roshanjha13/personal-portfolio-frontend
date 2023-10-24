@@ -5,35 +5,75 @@ import axios from "axios";
 import { HideLoading, ReloadData, ShowLoading } from "../../redux/rootSlice";
 
 const AdminExperiences = () => {
+  const dispatch = useDispatch();
   const { portfolioData } = useSelector((state) => state.root);
   const { experience } = portfolioData;
-
-  const dispatch = useDispatch();
   const [showAddEditModal, setShowAddEditModal] = useState(false);
   const [selectedItemForEdit, setSelectedItemForEdit] = useState(null);
+
+  const onClear = (e) => {
+    setShowAddEditModal("");
+  };
 
   const onFinish = async (values) => {
     try {
       dispatch(ShowLoading());
-      const response = await axios.post(
-        "http://localhost:3000/api/add-experience",
-          values,
-      );
+      let response;
+
+      if (selectedItemForEdit) {
+        response = await axios.put(
+          "http://localhost:3000/api/update-experience",
+          {
+            ...values,
+            _id: selectedItemForEdit._id,
+          }
+        )
+      } else {
+        response = await axios.post(
+          "http://localhost:3000/api/add-experience",
+          values
+        );
+      }
       dispatch(HideLoading());
+
       if (response.data.success) {
         message.success(response.data.message);
-        setShowAddEditModal(false)
-        dispatch(HideLoading())
-        dispatch(ReloadData(true))
+        setShowAddEditModal(false);
+        setSelectedItemForEdit(null);
+        dispatch(HideLoading());
+        dispatch(ReloadData(true));
       } else {
         message.error(response.data.message);
       }
     } catch (error) {
       dispatch(HideLoading());
-      message.error(response.data.message);
+      message.error(error.message);
     }
   };
- 
+
+  const onDelete = async (values) => {
+    try {
+      dispatch(ShowLoading());
+      const response = await axios.post(
+        "http://localhost:3000/api/delete-experience",
+        {
+          _id: values._id,
+        }
+      );
+      dispatch(HideLoading());
+      if (response.data.success) {
+        message.success(response.data.message);
+        dispatch(HideLoading());
+        dispatch(ReloadData(true));
+      } else {
+        message.error(response.data.message);
+      }
+    } catch (error) {
+      dispatch(HideLoading());
+      message.error(error.message);
+    }
+  };
+
   return (
     <div>
       <div className="flex justify-end">
@@ -47,7 +87,7 @@ const AdminExperiences = () => {
           Add Experience
         </button>
       </div>
-      <div className="grid grid-cols-4 gap-5 flex-col">
+      <div className="grid grid-cols-4 gap-5 mt-5">
         {experience.map((item, index) => (
           <div className="shadow border p-5 border-gray-500" key={index}>
             <h1 className="text-secondary text-xl font-bold">{item.period}</h1>
@@ -56,10 +96,22 @@ const AdminExperiences = () => {
             <h1>Role:{item.title}</h1>
             <h1>{item.description}</h1>
             <div className="flex justify-end gap-5">
-              <button className="text-white px-5 py-2 rounded-md hover:bg-green-500 bg-cyan-600">
+              <button
+                className="text-white px-5 py-2 rounded-md hover:bg-green-500 bg-cyan-600"
+                onClick={() => {
+                  setSelectedItemForEdit(item);
+                  setShowAddEditModal(true);
+              
+                }}
+              >
                 Edit
               </button>
-              <button className="text-white px-5 py-2 rounded-md hover:bg-green-500 bg-red-600">
+              <button
+                className="text-white px-5 py-2 rounded-md hover:bg-green-500 bg-red-600"
+                onClick={() => {
+                  onDelete(item);
+                }}
+              >
                 Delete
               </button>
             </div>
@@ -75,7 +127,11 @@ const AdminExperiences = () => {
         footer={null}
         onCancel={() => setShowAddEditModal(false)}
       >
-        <Form layout="vertical" onFinish={onFinish}>
+        <Form
+          layout="vertical"
+          onFinish={onFinish}
+          initialValues={selectedItemForEdit}
+        >
           <Form.Item name="period" label="Period">
             <input placeholder="Period" />
           </Form.Item>
@@ -96,6 +152,7 @@ const AdminExperiences = () => {
               className="border-primary text-primary px-5 py-2"
               onClick={() => {
                 setShowAddEditModal(false);
+                setSelectedItemForEdit(null);
               }}
             >
               Cancel
