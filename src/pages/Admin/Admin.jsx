@@ -15,8 +15,10 @@ const Admin = () => {
   return (
     <div>
       <Header />
+      <h1 className="text-2xl px-5 py-2 text-primary">PortFolio Admin</h1>
+      <hr/>
       {portfolioData && (
-        <div className="mt-5 p-5">
+        <div className="px-5 pb-10">
           <Tabs defaultActiveKey="1">
             <TabPane tab="Intro" key="1">
               <AdminIntro />
