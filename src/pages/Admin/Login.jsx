@@ -17,7 +17,7 @@ const Login = () => {
         dispatch(HideLoading())
         if(response.data.success){
             message.success(response.data.message)
-            localStorage.setItem('token',response.data)
+            localStorage.setItem('token',JSON.stringify(response.data))
             window.location.href = '/admin'
         }
     } catch (error) {
@@ -27,8 +27,8 @@ const Login = () => {
   }
 
   return (
-    <div className="flex justify-center items-center h-screen bg-slate-200">
-      <div className="w-96 flex gap-5 p-5 shadow border border-primary flex-col rounded-lg bg-teal-400">
+    <div className="flex justify-center items-center h-screen bg-primary">
+      <div className="w-96 flex gap-5 p-5 shadow border border-white flex-col rounded-lg bg-white">
         <h1 className="text-2xl">Roshan -Admin Login</h1>
         <hr/>
         <input
